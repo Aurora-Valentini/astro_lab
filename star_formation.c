@@ -65,8 +65,8 @@ int main(){
     double rho_star0=0.0;
     double rho_gas0=10.0;
 
-  //  double rho_gas = 10.0;       // assumo rho_gas costante = 10 [M_sun/kpc^2]
-    double h = 0.2*t_gas;      // passo di integrazione
+    //  double rho_gas = 10.0;       // assumo rho_gas costante = 10 [M_sun/kpc^2]
+    double h = 0.2*t_gas;      // passo di integrazione, dalla consegna deve essere 1/5 t_gas
     int n = (int) (2*t_gas/h);           // numero di passi, sono paranoid perche' t_gas è double
 
     //Impongo le condizioni iniziali
