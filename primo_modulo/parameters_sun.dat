@@ -1,0 +1,24 @@
+# Parametri utilizzati nel sistema MKS per il Sistema solare
+
+AU = 1.495978707e11  
+M_star = 1.989e30
+anno_in_sec = 31557600
+G_SI = 6.67430e-11
+
+n_pianeti = 4
+sistema = Solar
+
+
+r_1 = 0.387
+r_2 = 0.723
+r_3 = 1.0
+r_4 = 1.524
+
+nome_1 = Mercury
+nome_2 = Venus
+nome_3 = Earth
+nome_4 = Mars
+
+h = 0.0001
+n_passi = 20000
+output_step = 100

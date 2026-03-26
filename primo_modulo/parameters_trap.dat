@@ -1,0 +1,25 @@
+# Parametri utilizzati nel sistema MKS per Trappist-1
+
+AU = 1.495978707e11  
+M_star = 1.77e29
+anno_in_sec = 31557600
+G_SI = 6.67430e-11
+
+n_pianeti = 5
+sistema = Trappist
+
+r_1 = 0.011
+r_2 = 0.015
+r_3 = 0.021
+r_4 = 0.028
+r_5 = 0.037
+
+nome_1 = Planet_b
+nome_2 = Planet_c
+nome_3 = Planet_d
+nome_4 = Planet_e
+nome_5 = Planet_f
+
+h = 0.000001
+n_passi = 25000
+output_step = 100
