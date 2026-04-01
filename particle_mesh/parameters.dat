@@ -1,0 +1,22 @@
+# Parametri utilizzati per il codice di Particle Mesh
+
+# Unita' di misura 
+unit_v = 1e5                
+unit_m = 1.989e43           
+unit_l = 3.085678e21        
+G_cgs = 6.67430e-8          
+
+# Parametri della griglia   
+n_points = 10000           
+n_grid =  128          
+box_length = 50.0   
+a_delta = 0.1
+    
+# Parametri cosmologici
+H0 = 67.4         
+Omega_m = 0.315
+
+# Parametri per l'evoluzione
+dt = 0.01
+n_step = 500;
+n_skip = 50;
