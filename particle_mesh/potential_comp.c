@@ -7,6 +7,11 @@
 #include "physic.h"
 #include <fftw3.h>
 
+// In questo file scrivo le funzioni che servono per calcolare il potenziale.
+// Passo nello spazio di Fourier dove sfrutto il fatto che la derivata seconda
+// diventa semplicemente una moltiplicazione per (-k^2). Quindi devo usare FFT. 
+// Per tornare allo spazio reale infine faccio l'antitrasformata. 
+
 void compute_potential(double *rho, double *pot, Parametri *p) {
     int N = p->n_grid;
     
@@ -25,8 +30,8 @@ void compute_potential(double *rho, double *pot, Parametri *p) {
     kPot[0][0] = 0.0; 
     kPot[0][1] = 0.0;
 
-    // Prefattore moltiplicativo (serve per la normalizzazione). 
-    // Per non portarsi dietro errori di arrotondamento lo pongo =1 e lavoro con cifre piccole
+    // Ci sarebbe anche un prefattore moltiplicativo (normalizzazione). 
+    // Per non portarmi dietro errori di arrotondamento lo trascuro
     // double factor = 4.0 * PI * p->G_norm;
 
     for (int i = 1; i < N/2 + 1; i++) {
@@ -75,8 +80,8 @@ void comparison(double *pot_fft, Parametri *p, const char *filename) {
     printf("Confronto salvato in %s\n", filename);
 }
 
-// Per ottenere la forza e di conseguenza l'accelerazione devo differenziale il potenziale.
-// a=F/m ma lavorando in unita interne m=1
+// Per ottenere la forza e di conseguenza l'accelerazione devo differenziare il potenziale.
+// a=F/m ma lavorando in unita' interne m=1
 
 void compute_acc(double *pot, double *acc, Parametri *p){
 
@@ -96,7 +101,7 @@ void compute_acc(double *pot, double *acc, Parametri *p){
 }
 
 // A partire dall'accelerazione calcolata sulla griglia, questa funzione la assegna ad
-// una determinata particella.
+// una determinata particella in base alla sua posizione secondo i 3 metodi.
 void assign_acc(Particle *parts, double *grid_acc, Parametri *p) {
     int N = p->n_grid;
     double dx = p->dx;

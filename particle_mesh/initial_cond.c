@@ -5,6 +5,7 @@
 #include <string.h>
 #include "physic.h"
 
+
 // In questo file sono raccolte tute le funzioni che servono per fissare le
 // condizioni iniziali per la simulazione di particle mesh. 
 
@@ -42,16 +43,22 @@ void leggi_param(const char *filename, Parametri *param){
             else if(strcmp(key, "box_length") == 0) param->box_length = val;
             else if(strcmp(key, "a_delta") == 0) param->a_delta = val;
 
-            else if(strcmp(key, "dt") == 0) param->dt = val;
+            else if(strcmp(key, "dt_fisso") == 0) param->dt_fisso = val;
             else if(strcmp(key, "n_step") == 0) param->n_step = val;
-            else if(strcmp(key, "n_skip") == 0) param->n_skip = val;
+            else if(strcmp(key, "n_skip_adapt") == 0) param->n_skip_adapt = val;
+            else if(strcmp(key, "n_skip_fix") == 0) param->n_skip_fix = val;
+
+            else if(strcmp(key, "dt_flag") == 0) param->dt_flag = val;
+            else if(strcmp(key, "t_final") == 0) param->t_final = val;
+            else if(strcmp(key, "w_param") == 0) param->w_param = val;
+
         }
     }
     fclose(fp);
 }
 
 // Funzione che calcola i parametri aggiuntivi che mi servono sia per definire l'unita' interna del 
-// tempo e G_norm, sia per definire la geometria della griglia.
+// tempo e G_norm, sia per definire la geometria della griglia (celletta dx).
 void calcola_param(Parametri *param){
     param->unit_time = param->unit_l / param->unit_v; 
     param->G_norm = param->G_cgs * param->unit_m * (param->unit_time * param->unit_time) / (param->unit_l * param->unit_l * param->unit_l);
@@ -59,6 +66,7 @@ void calcola_param(Parametri *param){
     param->inv_dx = 1.0 / param->dx;
 }
 
+// Funzione che scrive le condizioni iniziali su file per il plot
 void scrivi_ic(Particle *part, int n_points, char *filename){
     FILE *fp = fopen(filename, "wb");
     if (!fp) { perror("Errore apertura file binario"); 
@@ -66,7 +74,6 @@ void scrivi_ic(Particle *part, int n_points, char *filename){
     }
 
     fwrite(part, sizeof(Particle), n_points, fp);
-
     fclose(fp);
     printf("Dati salvati in %s (formato binario)\n", filename);
 }
@@ -145,6 +152,7 @@ void histogram(Particle *part, Parametri *p, int n_bins) {
 
     
     // Calcolo il contrasto di densità delta = (n / n_medio) - 1
+    // Assumo masse delle particelle tutte uguali.
     double n_medio = (double)p->n_points / n_bins;
     
     FILE *f_hist = fopen("istogramma.txt", "w");

@@ -3,8 +3,8 @@
 //
 //  Si esegua una simulazione cosmologica a N-body implementando il metodo del particle mesh.
 //  Si risolva l'equazione di Poisson per la gravita' in un sistema N-body
-//  utilizzando una griglia fissa. Grazie ala griglia si abbatte il costo computazionale
-//  passando da un N^2 a NlogN poiche' non calcolo la forza  tra ogni particella ma uso la griglia
+//  utilizzando una griglia fissa. Grazie alla griglia si abbatte il costo computazionale:
+//  si passa da un N^2 a NlogN.
 //
 //  Created by Aurora Valentini on 24/11/25.
 //
@@ -29,14 +29,14 @@ int main() {
     //    e anche la geometria della griglia
     calcola_param(&param);
 
-
-    // 3. Alloca e genera le IC
+    // 3. Alloco e genero le IC
     Particle *part = (Particle *)malloc(param.n_points * sizeof(Particle));
     sinusoidal_ic(part, &param); 
 
-    // 4. faccio l'istogramma per fare un check
+    // 4. Faccio l'istogramma per fare un check
     histogram(part, &param, param.n_grid);
-    // Usa gnuplot per vedere il grafico
+
+    // Uso gnuplot per vedere il grafico
     // plot "istogramma.txt" using 1:2 with lines
 
     conversion("init_cond.bin", "init_cond.txt");
@@ -48,13 +48,8 @@ int main() {
     // 5. Inizializzo a zero la griglia della densita'
     double *rho = (double *)calloc(param.n_grid, sizeof(double));
 
-    // 6. Chiamo la funzione di assegnazione (NGP, CIC o TSC a seconda del Makefile)
+    // 6. Chiamo la funzione di assegnazione (NGP, CIC o TSC a seconda del Make)
     assign_density(part, rho, &param);
-
-    save_density(rho, &param, "density_plot.txt");
-
-    // Meglio e faccio direttamente un file txt perche' dopo mi serve per il loop del leapfrog 
-    //conversion("density_plot.bin", "density_plot.txt");
 
     printf("\n--- Checkpoint 2: Densita' assegnata  ---\n");
 
@@ -69,9 +64,10 @@ int main() {
     // Salvo il potenziale direttamente in txt plottare il confronto 
     // tra risultato del potenziale numerico (con fft) e analitico (calcolato a mano).
 
-    comparison(pot, &param, "comparison_test.txt");
+    // comparison(pot, &param, "comparison_test.txt");
+    // plot "istogramma.txt" using 1:2 with lines
 
-    printf("\n--- Checkpoint: Potenziale calcolato via FFT ---\n");
+    printf("\n--- Checkpoint 3: Potenziale calcolato via FFT ---\n");
     
     //---------------------- Calcolo delle accelerazioni  ---------------------------
 
@@ -89,42 +85,69 @@ int main() {
     char filename_rho[64];
     char filename_phase[64];
 
-    for (int step = 0; step < param.n_step; step++) {
+    printf("\n--- Inizio evoluzione (Timestep adattivo: %s) ---\n", param.dt_flag ? "ON" : "OFF");
 
-        // Primo kick di mezzo passo per aggiornare le velocita' di dt/2
-        kick(part, &param); 
 
-        // Drift di un passo intero per aggiornare le posizioni
-        drift(part, &param); 
+    double t = 0.0;
+    double dt_attuale = param.dt_fisso; // Valore iniziale
+    int step = 0;
+    int n_skip_attuale;
 
-        // Ora ricalcolo la densità -> il potenziale -> la forza (accelerazione)
-        // Inizializzo di nuovo a zero la griglia della densita' (senza riallocare la memoria)
-        for (int i = 0; i < param.n_grid; i++) {
-            rho[i] = 0.0;
-        }
+    if (param.dt_flag == 0) {
+        n_skip_attuale = param.n_skip_fix;
+    } else {
+        n_skip_attuale = param.n_skip_adapt;
+    }
 
+    while (t < param.t_final) {
+
+        // --- CALCOLO TIMESTEP ---
+        // Se param.dt_flag == 1 usa la funzione adattiva, altrimenti resta dt_fisso
+        dt_attuale = calcola_dt_adapt(part, &param);
+
+        // --- LEAPFROG ---
+        // Primo kick (mezzo passo)
+        kick(part, &param, dt_attuale); 
+
+        // Drift (passo intero)
+        drift(part, &param, dt_attuale); 
+
+        // Aggiornamento Forze
+        for (int i = 0; i < param.n_grid; i++) rho[i] = 0.0;
         assign_density(part, rho, &param);
         compute_potential(rho, pot, &param);
         compute_acc(pot, acc_grid, &param);
         assign_acc(part, acc_grid, &param);
 
-        // Secondo kick di mezzo passo per aggiornare le velocita' dell'altro dt/2
-        kick(part, &param);
+        // Secondo kick (mezzo passo)
+        kick(part, &param, dt_attuale * 0.5);
 
-        // Salvo su file i risultati per il plotting ogni n_step
-        if (step % param.n_skip == 0) {
+        // Aggiorno il tempo
+        t += dt_attuale;
+        step++;
+
+        // --- SALVATAGGIO ---
+        // Salvo ogni n_skip per non creare troppi file.
+        // Nota: ho scelto n_skip diversi per caso adattivo e fisso al fine di 
+        // visualizzare meglio la fase di shell crossing. 
+        if (step % n_skip_attuale == 0) {
             sprintf(filename_phase, "phase_step_%04d.txt", step);
             sprintf(filename_rho, "rho_step_%04d.txt", step);
             save_phase_space(part, &param, filename_phase);
             save_density(rho, &param, filename_rho);
-            printf("Salvataggio step %d completato.\n", step);
+            printf("t = %.3f | Step %d | dt = %.5f\n", t, step, dt_attuale);
         }
-        
+
+        /*
+        // DEBUG: per fare un check sull'andamento dell'evoluzione
+        if (step < 400) {
+            printf("DEBUG: step %d, dt_usato = %.10f, dt_param = %.10f\n", 
+            step, dt_attuale, param.dt_fisso);
+        }
+        */
     }
 
-    
-
-
+    printf("\n--- Evoluzione completata. Tempo finale raggiunto: %.3f ---\n", t);
 
     //---------------------- Pulizia finale parametri allocati --------------------
     free(part);

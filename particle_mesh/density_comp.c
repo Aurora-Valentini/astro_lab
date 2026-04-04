@@ -5,8 +5,8 @@
 #include <string.h>
 #include "physic.h"
 
-// In questo file metto la funzione che servono per assegnare la massa
-// ad ogni particella al fine di interpolare il campo di densita'.
+// In questo file scrivo le funzioni che servono per assegnare la massa
+// ad ogni particella al fine di interpolare il campo di densita' e sarvare i risultati.
 
 void assign_density(Particle *part, double *rho, Parametri *p) {
     // Inizializzo a zero l'array delle densita'
@@ -86,7 +86,8 @@ void save_density(double *rho, Parametri *p, const char *filename) {
         // Stampo la coordinata x e il valore del contrasto di densita' delta
         fprintf(f, "%e\t%e\n", x_coord, rho[j]);
     }
-
+    
+    printf("Dati salvati in: %s\n", filename);
     fclose(f);
 }
 

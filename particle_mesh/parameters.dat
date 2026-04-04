@@ -12,11 +12,14 @@ n_grid =  128
 box_length = 50.0   
 a_delta = 0.1
     
-# Parametri cosmologici
-H0 = 67.4         
-Omega_m = 0.315
 
 # Parametri per l'evoluzione
-dt = 0.01
-n_step = 500;
-n_skip = 50;
+dt_fisso = 0.1
+n_step = 200;
+n_skip_adapt = 10;
+n_skip_fix = 5;
+
+# Parametri per timestep adattivo
+dt_flag = 0     # 1 = adattivo, 0 = fisso
+t_final = 6.0                  
+w_param = 0.5
