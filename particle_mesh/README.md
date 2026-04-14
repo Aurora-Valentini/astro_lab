@@ -1,15 +1,10 @@
-Per compilare questo esercizio è necessario scegliere il metodo che si vuole 
-utilizzare per calcolare la densita' sulla griglia. 
+Per compilare questo esercizio è necessario scegliere il metodo che si vuole utilizzare per calcolare la densita' sulla griglia. 
 
-make ngp
-make cic
-make tsc
+make ngp run_pm
+make cic run_pm
+make tsc run_pm
 
-Si noti che se si compila solo con make di default il sistema utilizzera' 
-il metodo NGP. 
-
-In seguito avviare il programma con:
-./main_pm parameters.dat
+Si noti che se si compila solo con make di default il sistema utilizzera' il metodo NGP. 
 
 Verranno mostrati su terminale dei messaggi per monitorare la creazione dei files e la fine dell'esecuzione. 
 
