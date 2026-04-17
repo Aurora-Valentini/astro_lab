@@ -20,6 +20,12 @@ nome_3 = Planet_d
 nome_4 = Planet_e
 nome_5 = Planet_f
 
-h = 0.000001
-n_passi = 25000
-output_step = 100
+# Con questi parametri vedo la spirale che diverge
+#h = 0.000001
+#n_passi = 25000
+#output_step = 100
+
+# # Così le orbite divergono molto meno
+h = 0.0000001           
+n_passi = 250000
+output_step = 500

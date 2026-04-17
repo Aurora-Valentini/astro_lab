@@ -6,7 +6,7 @@ CFLAGS = -O2 -Wall
 EXEC = orbit
 
 # File oggetto da compilare
-OBJ = orbit.o read_func.o integr_func.o conversion.o 
+OBJ = main_orbit.o read_func.o integr_func.o conversion.o 
 
 # Target di default
 all: $(EXEC)
@@ -16,7 +16,7 @@ $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) -o $(EXEC) $(OBJ) -lm
 
 # Regole per compilare ogni .c → .o
-orbit.o: orbit.c read_func.h integr_func.h conversion.h
+main_orbit.o: main_orbit.c read_func.h integr_func.h conversion.h
 read_func.o: read_func.c read_func.h
 integr_func.o: integr_func.c integr_func.h 
 conversion.o: conversion.c conversion.h integr_func.h

@@ -8,11 +8,11 @@ void bin_to_ascii(const char *file_bin, const char *file_txt, int step) {
     // Leggo i file binari già generati dopo l'integrazione
     FILE *bin = fopen(file_bin, "rb");
     if (bin == NULL) {
-        perror("Errore apertura file binario");
+        perror("Errore apertura file .bin");
         exit(1);
     }
 
-    // Scrivo i file .txt 
+    // Apro i file .txt 
     FILE *txt = fopen(file_txt, "w");
     if (txt == NULL) {
         perror("Errore apertura file .txt");

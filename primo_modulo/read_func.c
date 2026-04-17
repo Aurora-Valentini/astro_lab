@@ -5,7 +5,7 @@
 #include "read_func.h"
 
 // Nella lettura dei files parameters che è non posizionale 
-// potrebbe assere che la riga n_pianeti venga dopo le righe delle posizioni
+// potrebbe succedere che la riga n_pianeti venga dopo le righe delle posizioni
 // quindi prima che io abbia allocato la memoria causando un segmentation fault.
 // Per evitare faccio due letture del file: nella prima cerco solo n_pianeti e nome del sistema e alloco la memoria;
 // nella seconda leggo i dati.
@@ -13,8 +13,8 @@
 void leggi_param(const char *filename, Parametri *p){
     FILE *fp = fopen(filename, "r");
     if(!fp){ perror("fopen"); exit(1); }  //check
+    
     char line[256];
-
     // Variabili per buffer temporanei
     char key[64], value_str[64];
 
@@ -47,10 +47,11 @@ void leggi_param(const char *filename, Parametri *p){
     // Ora alloco la memoria. Alloco tanti array 'distanze' quanti sono i pianeti 
     // e alloco tanti array 'nome_pianeti' quanti sono i pianeti.
     p->r = (double*) malloc(p->n_pianeti * sizeof(double));
-    p->nome_pianeta = (char**) malloc(p->n_pianeti * sizeof(char*));
+    p->nome_pianeta = (char**) malloc(p->n_pianeti * sizeof(char*)); // Alloco la memoria per i puntatori
+    
     for(int i = 0; i < p->n_pianeti; i++) {
-        p->nome_pianeta[i] = (char*)malloc(64);
-        p->nome_pianeta[i][0] = '\0'; // Inizializzo stringa vuota
+        p->nome_pianeta[i] = (char*)malloc(64); // Alloco la memoria per i caratteri che compongono il nome
+        p->nome_pianeta[i][0] = '\0'; // Inizializzo una stringa vuota
     }
 
     // Riporto il puntatore all'inizio del file per la seconda passata
@@ -86,7 +87,8 @@ void leggi_param(const char *filename, Parametri *p){
             else if(strncmp(key,"r_",2)==0){  
                 int index = atoi(key+2) - 1; 
                 // key+2 significa che parte dal terzo carattere e lo trasforma in intero. Quindi index parte da 0
-                // Poi controllo che l'indice stia tra 0 e n_pianeti
+                // Questo perche sono partita da 1 per definire r_1, r_2,... nel file parameter.
+                // Qui controllo che l'indice stia tra 0 e n_pianeti
                 if (index>=0 && index < p->n_pianeti){
                     p->r[index] = val;
                 }
@@ -94,6 +96,7 @@ void leggi_param(const char *filename, Parametri *p){
             // ---- PARSING DI STRINGHE ----
             else if (strncmp(key,"nome_",5)==0) {
                 int index = atoi(key+5) - 1;
+                // Come sopra, sono partita da 1 nel definire nome_1, nome_2,... nel file parameter
                 if(index>=0 && index < p->n_pianeti){
                     strcpy(p->nome_pianeta[index], value_str);
                 }  

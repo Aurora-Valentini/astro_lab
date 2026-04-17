@@ -15,7 +15,7 @@ void apri_file(FILE **fp, int n, const char *sistema, char **nome_pianeta){
         }
         
         snprintf(filename, sizeof(filename), "%s_%s.bin", sistema, nome_pianeta[i]);
-        fp[i] = fopen(filename, "wb"); //wb per scrittura binaria
+        fp[i] = fopen(filename, "wb"); //wb per scrivere file binario
     }
 }
 
@@ -103,14 +103,14 @@ void integra_orbite(const Parametri *param, FILE **fp){
             //       metodo di Eulero standard. Se invece aggiorno prima le velocita' e poi
             //       le posizioni allora uso il metodo di Eulero-Cromer che si rivela molto piu' preciso!
 
-            //x[i]= x[i] + vx[i] * param->h;
-            //y[i]= y[i] + vy[i] * param->h;
+            x[i]= x[i] + vx[i] * param->h;
+            y[i]= y[i] + vy[i] * param->h;
 
             vx[i]= vx[i] + ax[i] * param->h;
             vy[i]= vy[i] + ay[i] * param->h;
 
-            x[i]= x[i] + vx[i] * param->h;
-            y[i]= y[i] + vy[i] * param->h;
+            //x[i]= x[i] + vx[i] * param->h;
+            //y[i]= y[i] + vy[i] * param->h;
 
         }
 
@@ -124,7 +124,7 @@ void integra_orbite(const Parametri *param, FILE **fp){
             ay[i] = -(G_norm * y[i]) / (r*r*r);
         }
 
-        // 4. Scrivo i risultati in un file output binario 
+        // Scrivo i risultati in un file output binario 
         if (step % param->output_step == 0){
             scrivi_step(fp, param->n_pianeti, t, x, y, vx, vy, ax, ay, param);
         }

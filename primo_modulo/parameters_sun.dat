@@ -19,6 +19,12 @@ nome_2 = Venus
 nome_3 = Earth
 nome_4 = Mars
 
-h = 0.0001
-n_passi = 20000
-output_step = 100
+# Con questi parametri vedo la spirale che diverge
+#h = 0.0001           
+#n_passi = 20000
+#output_step = 100
+
+# Così le orbite divergono molto meno
+h = 0.00001           
+n_passi = 200000
+output_step = 500
