@@ -24,5 +24,5 @@ plot "Trappist_Planet_b.txt" u 2:3 w l title "Pianeta b" lc rgb "yellow", \
      "Trappist_Planet_e.txt" u 2:3 w l title "Pianeta e"    lc rgb "purple", \
      "Trappist_Planet_f.txt" u 2:3 w l title "Pianeta f"    lc rgb "blue"
 
-# Pausa per tenere aperta la finestra su alcuni sistemi
+# Pausa prima di chiudere la finestra
 pause -1 "Premere Invio per chiudere"

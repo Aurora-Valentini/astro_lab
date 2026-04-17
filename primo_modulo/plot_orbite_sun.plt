@@ -23,5 +23,5 @@ plot "Solar_Mercury.txt" u 2:3 w l title "Mercurio" lc rgb "gray", \
      "Solar_Earth.txt"   u 2:3 w l title "Terra"    lc rgb "green", \
      "Solar_Mars.txt"    u 2:3 w l title "Marte"    lc rgb "red"
 
-# Pausa per tenere aperta la finestra su alcuni sistemi
+# Pausa prima di chiudere la finestra
 pause -1 "Premere Invio per chiudere"
