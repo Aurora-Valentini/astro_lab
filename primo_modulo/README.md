@@ -1,4 +1,4 @@
-Questo esercizio si propone di risolvere l'integrazione delle orbite per il sistema Solare interno e eper il sistema Trappist-1.
+Questo esercizio si propone di risolvere l'integrazione delle orbite per il sistema Solare interno e per il sistema Trappist-1.
 Per compliare occorre utilizzare due comandi diversi a seconda del sistema scelto:
 
 make run_solare
