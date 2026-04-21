@@ -1,0 +1,18 @@
+# Parametri utilizzati per il codice di SPH in unita' normalizzate
+L = 1.0 
+N = 3600
+gamma = 1.4
+
+// Condizioni sulla Left Zone
+p_left = 1.0
+rho_left = 1.0
+v_left = 0.
+
+// Condizioni sulla Right Zone
+p_right = 0.1
+rho_right = 0.125
+v_right = 0.
+
+// Condizioni per l'evoluzione
+t_max = 0.2 
+n_ghost = 128
