@@ -9,7 +9,7 @@ In seguito per vedere i grafici relativi si digiti da terminale:
 
 gnuplot grafici.plt
 
-Si aprira' una finestra interattiva che a partire dalle condizioni iniziali mostrera' vari snapshot della simulazione per quantità quali densita', pressione e velocita' in funzione della pressione. Occorre premere 'Invio' per passare alla visualizzazione del grafico successivo. 
+Si aprira' una finestra interattiva che a partire dalle condizioni iniziali mostrera' vari snapshot della simulazione per quantità quali densita', pressione e velocita' in funzione della posizione. Occorre premere 'Invio' per passare alla visualizzazione del grafico successivo. 
 
 Al termine dell'esecuzione eliminare i file generati con:
 
