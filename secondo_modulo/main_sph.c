@@ -68,6 +68,7 @@ int main() {
     accel_qs(part, &param);
     salva_evol(part, &param, "quicksort_plot.txt");
     printf("Checkpoint 2: Ricerca dei vicini tramite quicksort.\n");
+    printf("DEBUG: n_cell = %d\n", param.n_cell);
     printf("Per verificare usare Gnuplot: \n");
     printf("plot \"quicksort_plot.txt\" using 1:2 with p ps 0.1 -> rho(x) vs x\n");
     
@@ -80,6 +81,7 @@ int main() {
     accel_ll(part, &param);
     salva_evol(part, &param, "linked_list_plot.txt");
     printf("Checkpoint 3: Ricerca dei vicini tramite linked list.\n");
+    printf("DEBUG: n_cell = %d\n", param.n_cell);
     printf("Per verificare usare Gnuplot: \n");
     printf("plot \"linked_list_plot.txt\" using 1:2 with p ps 0.1 -> rho(x) vs x\n");
 

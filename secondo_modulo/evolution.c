@@ -78,6 +78,7 @@ void leapfrog(Particle *part, Parameter *param, double dt, int metodo) {
     } 
     else { 
         // Uso LINKED LIST
+        qsort(part, param->n_totale, sizeof(Particle), compare_part);
         update_h(part, param); // Aggiorna h e h_max adattivo
         
         // Ricalcolo parametri griglia

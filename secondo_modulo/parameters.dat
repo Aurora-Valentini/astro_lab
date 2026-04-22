@@ -15,4 +15,4 @@ v_right = 0.
 
 // Condizioni per l'evoluzione
 t_max = 0.2 
-n_ghost = 128
+n_ghost =  128

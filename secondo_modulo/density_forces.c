@@ -47,8 +47,8 @@ void density_press_qs(Particle *part, Parameter *param) {
         // Inizializzo l'array a zero
         double rho_sum = 0.0;
         
-        // Range di ricerca del doppio (32*2) per sicurezza
-        int range = 64; 
+        // Range di ricerca: poco piu' di 32 per sicurezza. Con 32 ho problema di sottocampionamento
+        int range = 40; 
         int start = (i - range < 0) ? 0 : i - range;
         int end = (i + range >= param->n_totale) ? param->n_totale - 1 : i + range;
         
@@ -56,8 +56,14 @@ void density_press_qs(Particle *part, Parameter *param) {
         for (int j = start; j <= end; j++) {
 
             double r = fabs(part[i].pos - part[j].pos);
-            double Wi = kernel_W(r, part[i].h);
-            rho_sum += part[j].mass * Wi;
+            double h_medio = 0.5 * (part[i].h + part[j].h);
+
+            // Se sono abbastanza vicine calcolo il kernel
+            if (r < 2.0 * h_medio) {
+                double Wi = kernel_W(r, h_medio);
+                rho_sum += part[j].mass * Wi;
+            }
+            
         }
         
         // Aggiorno la densita' nella struct della particella i-esima
@@ -160,7 +166,7 @@ void accel_qs(Particle *part, Parameter *param) {
         if (part[i].ghost == 1) continue;
 
         // Uso lo stesso range che ho usato per la densità
-        int range = 64; 
+        int range = 40; 
         int start = (i - range < 0) ? 0 : i - range;
         int end = (i + range >= param->n_totale) ? param->n_totale - 1 : i + range;
         
