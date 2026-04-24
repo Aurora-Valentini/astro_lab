@@ -78,20 +78,16 @@ void integra_orbite(const Parametri *param, FILE **fp){
         vy[i] = sqrt(G_norm * 1 / param->r[i]); // moltiplico per M_star= 1 perche uso G_norm 
 
         double r = sqrt(x[i]*x[i] + y[i]*y[i]);
-        ax[i] = -(G_norm * x[i]) / (r*r*r);
-        ay[i] = -(G_norm * y[i]) / (r*r*r);
-    }
-    
-    double t=0.0;
-    // Calcolo l'accelerazione al tempo t=0
-    for(int i=0;i<param->n_pianeti; i++){
-        double r= sqrt( x[i]*x[i] + y[i]*y[i] );
         ax[i]= -(G_norm * 1 * x[i])/ (r*r*r);     // moltiplico per M_star= 1 perche uso G_norm 
         ay[i]= -(G_norm * 1 * y[i])/ (r*r*r);
     }
+
+    // Inizializzo la variabile temporale
+    double t=0.0;
+    
     // Scrivo lo stato iniziale del sistema 
     scrivi_step(fp, param->n_pianeti, t, x, y, vx, vy, ax, ay, param);
-
+    
     // Inizio il loop di integrazione
     // Parto dallo step 1 perche' lo step zero e' gia stato trovato sopra
     for(int step=1; step < param->n_passi; step++){

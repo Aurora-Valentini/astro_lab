@@ -22,8 +22,7 @@ void bin_to_ascii(const char *file_bin, const char *file_txt, int step) {
 
     Dato d;
 
-    // Introduco il contatore perche' voglio scrivere un risultato dell'integrazione ogni n output_step
-    // Output_step l'ho definito nel file parameters.
+    // Ho gia' usato output step in integra orbite, quindi qui leggo tutti i dati.
     while (fread(&d, sizeof(Dato), 1, bin) == 1) {
         fprintf(txt, "%.12e\t%.12e\t%.12e\t%.12e\t%.12e\t%.12e\t%.12e\n", 
             d.t, d.x, d.y, d.vx, d.vy, d.ax, d.ay);

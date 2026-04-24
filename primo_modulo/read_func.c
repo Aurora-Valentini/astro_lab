@@ -44,7 +44,7 @@ void leggi_param(const char *filename, Parametri *p){
         exit(1);
     }
 
-    // Ora alloco la memoria. Alloco tanti array 'distanze' quanti sono i pianeti 
+    // Ora alloco la memoria. Alloco tanti array 'distanze(r)' quanti sono i pianeti 
     // e alloco tanti array 'nome_pianeti' quanti sono i pianeti.
     p->r = (double*) malloc(p->n_pianeti * sizeof(double));
     p->nome_pianeta = (char**) malloc(p->n_pianeti * sizeof(char*)); // Alloco la memoria per i puntatori

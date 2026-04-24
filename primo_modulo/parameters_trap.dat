@@ -25,7 +25,7 @@ nome_5 = Planet_f
 #n_passi = 25000
 #output_step = 100
 
-# # Così le orbite divergono molto meno
+# Così le orbite divergono molto meno
 h = 0.0000001           
 n_passi = 250000
 output_step = 500
