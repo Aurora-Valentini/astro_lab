@@ -90,8 +90,9 @@ void linked_list(Particle *part, Parameter *param) {
         // Quindi forzo queste ghost a stare nella prima e nell'ultima cella.
         // Questo rende il calcolo un po' meno efficiente infatti il codice dovrà scorrere 
         // delle liste molto lunghe per la prima e l'ultima cella.  
-        if (k_cell < 0) k_cell = 0;
-        if (k_cell >= param->n_cell) k_cell = param->n_cell - 1;
+
+        k_cell = (k_cell > 0) * k_cell; 
+        k_cell = (k_cell < param->n_cell) ? k_cell : (param->n_cell - 1);
 
         // La particella i-esima guarda chi è attualmente il primo della lista nella sua cella
         // e memorizza l'indirizzo nel puntatore next

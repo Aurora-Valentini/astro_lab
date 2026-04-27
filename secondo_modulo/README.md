@@ -1,5 +1,5 @@
-Questo esercizio si propone di simulare il problema di Sod in 1 dimensione.
-Per compliare utilizzare il comando:
+Questo esercizio implementa una simulazione SPH in 1 dimensione che prende il nome di problema di Sod.
+Per compilare utilizzare il comando:
 
 make run_sph
 

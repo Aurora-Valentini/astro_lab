@@ -80,11 +80,6 @@ void leapfrog(Particle *part, Parameter *param, double dt, int metodo) {
         // Uso LINKED LIST
         qsort(part, param->n_totale, sizeof(Particle), compare_part);
         update_h(part, param); // Aggiorna h e h_max adattivo
-        
-        // Ricalcolo parametri griglia
-        param->d_cell = 2.0 * param->h_max;
-        param->n_cell = (int)ceil(param->L / param->d_cell);
-        
         linked_list(part, param); 
         density_press_ll(part, param);
         accel_ll(part, param);

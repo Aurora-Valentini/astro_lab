@@ -84,22 +84,22 @@ do for [i=0:n_snap-1] {
 # 6. CONFRONTO FINALE
 # ------------------------------
 set title "Confronto finale densità (ρ)"
-plot "final_qsort.txt" using 1:2 with points ps 0.1 title "QS", \
-     "final_linked_list.txt" using 1:2 with points ps 0.1 title "LL"
+plot "snapshot_qs_003.txt" using 1:2 with points ps 0.1 title "QS", \
+     "snapshot_ll_003.txt" using 1:2 with points ps 0.1 title "LL"
 
 print "Confronto finale -> premere INVIO per continuare"
 pause -1
 
 set title "Confronto finale pressione (P)"
-plot "final_qsort.txt" using 1:3 with points ps 0.1 title "QS", \
-     "final_linked_list.txt" using 1:3 with points ps 0.1 title "LL"
+plot "snapshot_qs_003.txt" using 1:3 with points ps 0.1 title "QS", \
+     "snapshot_ll_003.txt" using 1:3 with points ps 0.1 title "LL"
 
 print "Confronto finale -> premere INVIO per continuare"
 pause -1
 
 set title "Confronto finale velocita' (v)"
-plot "final_qsort.txt" using 1:5 with points ps 0.1 title "QS", \
-     "final_linked_list.txt" using 1:5 with points ps 0.1 title "LL"
+plot "snapshot_qs_003.txt" using 1:5 with points ps 0.1 title "QS", \
+     "snapshot_ll_003.txt" using 1:5 with points ps 0.1 title "LL"
 
 print "Confronto finale -> premere INVIO per chiudere"
 pause -1

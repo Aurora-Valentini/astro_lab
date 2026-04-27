@@ -112,8 +112,6 @@ int main() {
         
             salva_evol(part, &param, filename);
         
-            printf("Salvato snapshot QS a t = %.3f -> %s\n", t, filename);
-        
             next_output_time += output_interval;
             snapshot_id++;
         }
@@ -124,7 +122,6 @@ int main() {
     double time_qs = (double)(end_qs - start_qs) / CLOCKS_PER_SEC;
 
     printf("Simulazione 'Quicksort' completata in %f secondi.\n", time_qs);
-    salva_evol(part, &param, "final_qsort.txt");
 
     // --- SECONDA SIMULAZIONE: LINKED LIST ---
     init_cond(part, &param); // Inizializzo tutto di nuovo 
@@ -148,8 +145,6 @@ int main() {
         
             salva_evol(part, &param, filename);
         
-            printf("Salvato snapshot LL a t = %.3f -> %s\n", t, filename);
-        
             next_output_time_ll += output_interval;
             snapshot_id_ll++;
         }
@@ -159,7 +154,6 @@ int main() {
     clock_t end_ll = clock();
     double time_ll = (double)(end_ll - start_ll) / CLOCKS_PER_SEC;
     printf("Simulazione 'Linked list' completata in %f secondi.\n", time_ll);
-    salva_evol(part, &param, "final_linked_list.txt");
 
     // --- CONFRONTO FINALE ---
     printf("Speedup: %.2f\n", time_qs / time_ll);
@@ -168,5 +162,7 @@ int main() {
     free(part);
     free(param.head);
     
+    printf("Fine simulazione...\n");
+
     return 0;
 }
